@@ -20,30 +20,28 @@ public class Main {
     }
 
     public static void addBook(Book book) {
-        libraryBooks[0] = book;
+        addBook(book,0);
     }
 
     public static void addBook(Book book, int index) {
-        try{
-            libraryBooks[index] = book;
-        }
-        catch (ArrayIndexOutOfBoundsException e){
-            System.err.println("THERE IS NO SUCH A PLACE IN THE LIBRARY!");
+        if (isIndexInBound(index)) {
+            if (libraryBooks[index] != null)
+                System.err.println("THE PLACE IS OCCUPIED!");
+            else
+                libraryBooks[index] = book;
         }
     }
 
     public static void addBook(Book book, boolean atTheEnd) {
-        for(int i = libraryBooks.length; i >= 0; i--) {
-            if ( libraryBooks[i - 1] != null || i == 0)
-                try {
+        if (libraryBooks[libraryBooks.length - 1] != null)
+            System.err.println("THE LAST PLACE IN THE LIBRARY IS OCCUPIED!");
+        else
+            for(int i = libraryBooks.length - 1; i >= 0; i--) {
+                if ( libraryBooks[i - 1] != null || i == 0) {
                     libraryBooks[i] = book;
                     break;
                 }
-                catch (ArrayIndexOutOfBoundsException e){
-                    System.err.println("THE LAST PLACE IN THE LIBRARY IS OCCUPIED!");
-                    break;
-                }
-        }
+            }
     }
 
     public static void readAll() {
@@ -61,21 +59,23 @@ public class Main {
     }
 
     public static void updateTitle(String newTitle, int index) {
-        try{
-            libraryBooks[index].setTitle(newTitle);
-        }
-        catch (NullPointerException e){
-            System.err.println("THERE ARE NO BOOKS IN THIS PLACE!");
+        if (isIndexInBound(index)) {
+            if (libraryBooks[index] == null)
+                System.err.println("THERE ARE NO ANY BOOKS IN THIS PLACE!");
+            else
+                libraryBooks[index].setTitle(newTitle);
         }
     }
 
     public static void deleteBook(int index) {
-        if (index >= 0 && index < libraryBooks.length) libraryBooks[index] = null;
+        if (isIndexInBound(index))
+            libraryBooks[index] = null;
     }
 
     public static int findByTitle(String title){
         for(int i = 0; i < libraryBooks.length; i++){
-            if (libraryBooks[i] != null && libraryBooks[i].getTitle().equals(title)) {return i;}
+            if (libraryBooks[i] != null && libraryBooks[i].getTitle().equals(title))
+                return i;
         }
         System.err.println("THERE IS NO SUCH A BOOK IN THIS LIBRARY!");
         return -1;
@@ -83,6 +83,17 @@ public class Main {
 
     public static void swapBook(String title, Book newBook) {
         int swappableBookIndex = findByTitle(title);
-        if (swappableBookIndex != -1) libraryBooks[swappableBookIndex] = newBook;
+
+        if (swappableBookIndex != -1)
+            libraryBooks[swappableBookIndex] = newBook;
+    }
+
+    public static boolean isIndexInBound(int index){
+        if (index < 0 || index >= libraryBooks.length){
+            System.err.println("THERE IS NO SUCH A PLACE IN THE LIBRARY!");
+            return false;
+        }
+        else
+            return true;
     }
 }
