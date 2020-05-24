@@ -82,7 +82,7 @@ public class Main {
     }
 
     public static void swapBook(String title, Book newBook) {
-
-        if (findByTitle(title) != -1) libraryBooks[findByTitle(title)] = newBook;
+        int swappableBookIndex = findByTitle(title);
+        if (swappableBookIndex != -1) libraryBooks[swappableBookIndex] = newBook;
     }
 }
