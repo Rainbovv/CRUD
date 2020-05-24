@@ -8,7 +8,7 @@ public class Main {
 
         addBook(new Book("Java Development sucks!"));
         addBook(new Book("Java Testing Basics!"), 1);
-        addBook(new Book("Basics of OOP!"), 7);
+        addBook(new Book("Basics of OOP!"), 11);
         addBook(new Book("Blabla"), true);
         deleteBook(7);
 
@@ -37,7 +37,7 @@ public class Main {
             System.err.println("THE LAST PLACE IN THE LIBRARY IS OCCUPIED!");
         else
             for(int i = libraryBooks.length - 1; i >= 0; i--) {
-                if ( libraryBooks[i - 1] != null || i == 0) {
+                if (i == 0 || libraryBooks[i - 1] != null) {
                     libraryBooks[i] = book;
                     break;
                 }
